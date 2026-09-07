@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<script>(function(){try{var t=localStorage.getItem('aideas-theme')||'dark';document.documentElement.setAttribute('data-theme',t);}catch(e){document.documentElement.setAttribute('data-theme','dark');}})();</script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Page Not Found — aiDEAS</title>
+<link rel="icon" href="assets/img/favicon-32.png">
+<link rel="stylesheet" href="assets/css/style.css">
+<style>
+  .notfound{
+    min-height: 100vh;
+    display:flex; flex-direction:column; align-items:center; justify-content:center;
+    text-align:center; padding: 24px;
+  }
+  .notfound .code{
+    font-family: var(--font-display);
+    font-size: clamp(80px, 16vw, 160px);
+    font-weight: 700;
+    line-height: 1;
+    margin: 0;
+  }
+  .notfound h1{ font-family: var(--font-display); font-size: 24px; margin: 10px 0 12px; }
+  .notfound p{ color: var(--text-dim); margin: 0 0 28px; }
+</style>
+</head>
+<body>
+
+<div class="notfound">
+  <p class="code grad-text">404</p>
+  <h1>This page wandered off the grid.</h1>
+  <p>The page you're looking for doesn't exist — it may have been moved or removed.</p>
+  <a href="index.html" class="btn btn-primary">Back to Home</a>
+</div>
+
+</body>
+</html>

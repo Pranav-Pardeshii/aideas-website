@@ -1,0 +1,15 @@
+# OS files
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/*
+!.vscode/extensions.json
+
+# Node (only relevant if you use the optional npm dev server)
+node_modules/
+npm-debug.log*
+
+# Local build/output, if you ever add a bundler later
+dist/
+.cache/
