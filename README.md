@@ -169,3 +169,5 @@ Add or adjust variables there if you want to retune either theme.
   copy instead.
 - All member, event, and faculty photos are placeholders — swap them for real
   ones using the same filenames, or update the paths in the data arrays.
+#   a i d e a s - f i n a l - h e r o  
+ 
