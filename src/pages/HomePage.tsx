@@ -12,7 +12,10 @@ function useReveal() {
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((e) => {
-          if (e.isIntersecting) e.target.classList.add('in')
+          if (e.isIntersecting) {
+            e.target.classList.add('in')
+            obs.unobserve(e.target)
+          }
         })
       },
       { threshold: 0.12 }
@@ -31,18 +34,24 @@ function useVideoAutoPause() {
     const videos = Array.from(container.querySelectorAll<HTMLVideoElement>('video'))
     if (videos.length === 0) return
 
+    const visibleVideos = new Set<HTMLVideoElement>()
+
     const obs = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const video = entry.target as HTMLVideoElement
           if (entry.isIntersecting) {
-            video.play().catch(() => {})
+            visibleVideos.add(video)
+            if (!document.hidden) {
+              video.play().catch(() => {})
+            }
           } else {
+            visibleVideos.delete(video)
             video.pause()
           }
         })
       },
-      { rootMargin: '80px', threshold: 0.15 }
+      { rootMargin: '60px', threshold: 0.1 }
     )
 
     videos.forEach((v) => {
@@ -53,6 +62,8 @@ function useVideoAutoPause() {
     const onVisibility = () => {
       if (document.hidden) {
         videos.forEach((v) => v.pause())
+      } else {
+        visibleVideos.forEach((v) => v.play().catch(() => {}))
       }
     }
     document.addEventListener('visibilitychange', onVisibility)

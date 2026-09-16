@@ -18,8 +18,14 @@ export function Hero() {
   }
 
   const handlePointerDown = (e: React.PointerEvent) => {
-    const canvas = document.querySelector('.robot-container canvas') as HTMLCanvasElement
-    if (canvas && !canvas.contains(e.target as Node)) {
+    // Never hijack touch events on mobile devices to ensure 100% native smooth scrolling
+    if (e.pointerType === 'touch') return
+
+    const target = e.target as HTMLElement | null
+    if (target?.closest('a, button, input, textarea')) return
+
+    const canvas = document.querySelector('.robot-container canvas') as HTMLCanvasElement | null
+    if (canvas && !canvas.contains(target as Node)) {
       const ptrDown = new PointerEvent('pointerdown', {
         clientX: e.clientX,
         clientY: e.clientY,

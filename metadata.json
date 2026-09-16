@@ -1,0 +1,8 @@
+{
+  "name": "aiDEAS — AI & Data Science Association of Students",
+  "description": "aiDEAS is a student-led AI & Data Science club — workshops, hackathons, and a community for students who want to build, not just learn.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
