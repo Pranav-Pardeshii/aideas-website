@@ -32,16 +32,16 @@ export function HomePage() {
       <section className="zigzag-section section-pad ambient-panel">
         <div className="wrap">
           <div className="section-head" data-reveal>
-            <div className="eyebrow">Why join</div>
-            <h2>Everything you need to <span className="grad-text">start building.</span></h2>
-            <p>A community, a curriculum, and a reason to ship something real before you graduate.</p>
+            <div className="eyebrow">Why Pledge Thyself</div>
+            <h2>Every relic and lore thou needst to <span className="grad-text">forge thy path.</span></h2>
+            <p>A fellowship, an ancient curriculum, and a noble quest to forge genuine artifacts ere thy graduation.</p>
           </div>
 
           <div className="zigzag-block" data-reveal>
             <div className="zigzag-copy">
-              <h3>Learn by building</h3>
-              <p>Workshops and reading groups are just the start — every track ends with a real project, reviewed by peers and mentors, not a quiz.</p>
-              <a href="/about" className="zigzag-link">Read our story →</a>
+              <h3>Mastery through Forging</h3>
+              <p>Our gatherings and tomes of lore are but the beginning — every path ends with a mighty artifact, reviewed by wise peers and mentors, not a mere trial of words.</p>
+              <a href="/about" className="zigzag-link">Read our chronicles →</a>
             </div>
             <div className="zigzag-visual">
               <div className="mockup-frame">
@@ -57,9 +57,9 @@ export function HomePage() {
 
           <div className="zigzag-block reverse" data-reveal>
             <div className="zigzag-copy">
-              <h3>Workshops &amp; hackathons</h3>
-              <p>From weekend build nights to a full 24-hour hack day — hands-on sessions run through the semester, open to every year and branch.</p>
-              <a href="/events" className="zigzag-link">See events →</a>
+              <h3>Councils &amp; Grand Tournaments</h3>
+              <p>From twilight forges to full sun-cycles of creation — our hands-on councils run throughout the age, open to every kin and realm.</p>
+              <a href="/events" className="zigzag-link">View gatherings →</a>
             </div>
             <div className="zigzag-visual">
               <div className="mockup-frame">
@@ -87,9 +87,9 @@ export function HomePage() {
 
           <div className="zigzag-block" data-reveal>
             <div className="zigzag-copy">
-              <h3>A growing community</h3>
-              <p>A cross-year network of students who share resources, opportunities, and momentum — meet the core team running it.</p>
-              <a href="/members" className="zigzag-link">Meet the team →</a>
+              <h3>A Fellowship Ever-Growing</h3>
+              <p>A vast alliance of scholars who share ancient texts, noble quests, and unyielding momentum — behold the High Council that guides it.</p>
+              <a href="/members" className="zigzag-link">Meet the High Council →</a>
             </div>
             <div className="zigzag-visual">
               <div className="mockup-frame">
@@ -113,19 +113,19 @@ export function HomePage() {
           <div className="stats-row" data-reveal>
             <div className="stat-block">
               <div className="stat-num">50+</div>
-              <div className="stat-label">Active Members</div>
+              <div className="stat-label">Sworn Brethren</div>
             </div>
             <div className="stat-block">
               <div className="stat-num">12+</div>
-              <div className="stat-label">Workshops a Year</div>
+              <div className="stat-label">Councils an Age</div>
             </div>
             <div className="stat-block">
               <div className="stat-num">3</div>
-              <div className="stat-label">Flagship Events</div>
+              <div className="stat-label">Grand Tournaments</div>
             </div>
             <div className="stat-block">
               <div className="stat-num">100%</div>
-              <div className="stat-label">Student Run</div>
+              <div className="stat-label">Guided by the Free Folk</div>
             </div>
           </div>
         </div>
@@ -135,21 +135,21 @@ export function HomePage() {
       <section className="section-pad ambient-panel">
         <div className="wrap">
           <div className="section-head" data-reveal>
-            <div className="eyebrow">What members say</div>
-            <h2>Straight from the <span className="grad-text">community.</span></h2>
+            <div className="eyebrow">Tales of the Fellowship</div>
+            <h2>Echoes from the <span className="grad-text">realm.</span></h2>
           </div>
           <div className="testimonial-grid">
             {[
-              { text: '"aiDEAS is where I wrote my first real ML model. The workshops actually get hands-on, fast."', avatar: 'linear-gradient(135deg,#38d1ff,#22b8f0)', role: '2nd Year, AI & DS' },
-              { text: '"I joined for the hackathons and stayed for the people. Best decision of my college life."', avatar: 'linear-gradient(135deg,#b06bff,#9b5cff)', role: '3rd Year, AI & DS' },
-              { text: '"Nowhere else on campus will you find seniors this willing to actually teach you something."', avatar: 'linear-gradient(135deg,#38d1ff,#b06bff)', role: '1st Year, AI & DS' },
+              { text: '"aiDEAS is where I forged my first true relic of machine intellect. The councils are swift and hands-on."', avatar: 'linear-gradient(135deg,#38d1ff,#22b8f0)', role: '2nd Year, AI & DS' },
+              { text: '"I journeyed for the tournaments and remained for the fellowship. The greatest quest of my scholarly years."', avatar: 'linear-gradient(135deg,#b06bff,#9b5cff)', role: '3rd Year, AI & DS' },
+              { text: '"In no other realm wilt thou find elders so willing to impart the deep magics."', avatar: 'linear-gradient(135deg,#38d1ff,#b06bff)', role: '1st Year, AI & DS' },
             ].map((t, i) => (
               <div className="testimonial-card" data-reveal key={i}>
                 <p>{t.text}</p>
                 <div className="testimonial-author">
                   <span className="testimonial-avatar" style={{ background: t.avatar }} />
                   <div>
-                    <div className="name">[Member Name]</div>
+                    <div className="name">[Scholar Name]</div>
                     <div className="role">{t.role}</div>
                   </div>
                 </div>
@@ -163,15 +163,15 @@ export function HomePage() {
       <section className="section-pad ambient-panel soft">
         <div className="wrap">
           <div className="section-head" data-reveal>
-            <div className="eyebrow">A closer look</div>
-            <h2>What is <span className="grad-text">aiDEAS?</span></h2>
+            <div className="eyebrow">Gaze into the Palantír</div>
+            <h2>What is this <span className="grad-text">Fellowship of aiDEAS?</span></h2>
           </div>
           <div className="about-cards">
             {[
-              { title: 'Who We Are', color: 'purple', text: "aiDEAS is a passionate student-led association at PVG's College of Engineering, Technology and Management (PVGCOET), Pune, bringing together enthusiasts of Artificial Intelligence and Data Science." },
-              { title: 'What We Do', color: 'cyan', text: 'We organize technical workshops, guest lectures, hackathons, and project showcases to nurture real-world skills and collaborative innovation in AI and DS.' },
-              { title: 'Vision & Mission', color: 'purple', text: 'Our mission is to create an ecosystem where students not only learn but build. We envision a future where every student is AI-aware, AI-capable, and AI-empowered.' },
-              { title: 'Our Values', color: 'cyan', text: 'We believe in innovation, inclusivity, curiosity, and teamwork. At aiDEAS, every idea matters — and every mind can help shape the future.' },
+              { title: 'Who We Are', color: 'purple', text: "aiDEAS is a noble and fervent alliance at PVG's College of Engineering, Technology and Management, uniting the greatest seekers of Artificial Intelligence and Data Science." },
+              { title: 'What We Do', color: 'cyan', text: 'We summon technical councils, wise emissaries, tournaments, and grand exhibitions to nurture worldly craftsmanship and united innovation.' },
+              { title: 'Vision & Mission', color: 'purple', text: 'Our grand quest is to cultivate a realm where scholars do not merely read the lore, but forge the future. We foresee an age where every mind is awakened and empowered by the arcane arts of AI.' },
+              { title: 'A Call for Patrons & Benefactors', color: 'cyan', text: 'To forge the future, our fellowship requires gold and provisions. We summon noble lords, patrons, and sovereign enterprises to sponsor our tournaments and fuel the grand quests of our scholars.' },
             ].map((card, i) => (
               <div className={`info-card ${card.color}`} data-reveal key={i}>
                 <h3>{card.title}</h3>
@@ -180,7 +180,7 @@ export function HomePage() {
             ))}
           </div>
           <div className="value-strip" data-reveal>
-            {['Curiosity-driven', 'Peer-taught', 'Project-first', 'Open to all years', 'Cross-branch'].map((v) => (
+            {['Driven by Curiosity', 'Taught by Kin', 'Artifacts Above All', 'Open to Every Realm', 'A United Fellowship'].map((v) => (
               <span className="value-chip" key={v}>{v}</span>
             ))}
           </div>

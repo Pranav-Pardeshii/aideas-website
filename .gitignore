@@ -13,3 +13,5 @@ npm-debug.log*
 # Local build/output, if you ever add a bundler later
 dist/
 .cache/
+
+middle-earth-font/*

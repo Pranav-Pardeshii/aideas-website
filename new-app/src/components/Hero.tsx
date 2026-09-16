@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spotlight'
-import { Card } from '@/components/ui/card'
-import FlowRibbons from '@/components/ui/FlowRibbons'
 
 const WORDS = ['Future Leaders', 'Builders', 'Innovators', 'Researchers', 'Creators']
 
@@ -66,93 +64,105 @@ export function Hero() {
     next?.scrollIntoView({ behavior: 'smooth' })
   }
 
+  const handlePointerDown = (e: React.PointerEvent) => {
+    const canvas = document.querySelector('.robot-container canvas') as HTMLCanvasElement;
+    if (canvas && !canvas.contains(e.target as Node)) {
+      const ptrDown = new PointerEvent('pointerdown', { clientX: e.clientX, clientY: e.clientY, pointerId: e.pointerId, bubbles: true, cancelable: true, view: window });
+      const mouseDown = new MouseEvent('mousedown', { clientX: e.clientX, clientY: e.clientY, bubbles: true, cancelable: true, view: window });
+      canvas.dispatchEvent(ptrDown);
+      canvas.dispatchEvent(mouseDown);
+      
+      setTimeout(() => {
+        const ptrUp = new PointerEvent('pointerup', { clientX: e.clientX, clientY: e.clientY, pointerId: e.pointerId, bubbles: true, cancelable: true, view: window });
+        const mouseUp = new MouseEvent('mouseup', { clientX: e.clientX, clientY: e.clientY, bubbles: true, cancelable: true, view: window });
+        canvas.dispatchEvent(ptrUp);
+        canvas.dispatchEvent(mouseUp);
+      }, 50);
+    }
+  }
+
   return (
-    <section id="home" ref={sectionRef as React.RefObject<HTMLElement>}>
-      <div style={{ position: 'absolute', inset: 0, zIndex: 1, opacity: 0.8, pointerEvents: 'none' }}>
-        <FlowRibbons />
-      </div>
+    <section id="home" ref={sectionRef as React.RefObject<HTMLElement>} onPointerDown={handlePointerDown}>
       <div className="wrap hero-inner">
         {/* ── Left copy ── */}
         <div className="hero-copy">
-          <h1 data-reveal="zoom" className="hero-title" style={{ transitionDelay: '.15s', fontFamily: '"Orbitron", sans-serif', lineHeight: '1.2', fontSize: 'clamp(40px, 6vw, 76px)', fontWeight: 800 }}>
-            <span style={{ color: '#ffffff' }}>Welcome to </span>
-            <span style={{ color: '#a855f7' }}>ai</span>
-            <span style={{ color: '#38bdf8' }}>DEAS</span>
+          <h1 data-reveal="zoom" className="hero-title" style={{ transitionDelay: '.15s' }}>
+            <span className="hero-brand">
+              <span className="brand-ai">ai</span>
+              <span className="brand-deas">DEAS</span>
+            </span>
           </h1>
-          <p className="empower-line" data-reveal style={{ transitionDelay: '.25s' }}>
-            Empowering&nbsp;
-            <span className="type-target">{word}</span>
-            <span className="cursor" aria-hidden="true">|</span>
+
+          <p className="empower-line" style={{ transitionDelay: '.25s', fontSize: '1.25rem', fontFamily: 'serif', fontStyle: 'italic', color: '#ccc' }}>
+            The Fellowship of Scholars, forging the intellect of machines.
           </p>
+
           <div className="hero-actions" data-reveal style={{ transitionDelay: '.35s' }}>
-            <a href="about.html" className="btn btn-primary btn-pulse">Explore Now →</a>
-            <a href="events.html" className="btn btn-ghost">See Events</a>
+            <a href="#about" className="btn btn-primary btn-pulse" onClick={handleScrollDown}>
+              Embark on the Quest →
+            </a>
+            <a href="/events" className="btn btn-ghost">
+              View Gatherings
+            </a>
+          </div>
+
+          {/* ── Stats badge row under CTAs ── */}
+          <div className="hero-stats-badge" data-reveal style={{ transitionDelay: '.45s' }}>
+            <span className="stats-indicator" aria-hidden="true" />
+            <span className="stats-segment">
+              <strong className="stats-highlight">500+</strong> Sworn Brethren
+            </span>
+            <span className="stats-sep" aria-hidden="true">·</span>
+            <span className="stats-segment">
+              <strong className="stats-highlight">20+</strong> Grand Councils
+            </span>
+            <span className="stats-sep" aria-hidden="true">·</span>
+            <span className="stats-segment">
+              <strong className="stats-highlight">Forged in 2023</strong>
+            </span>
           </div>
         </div>
 
-        {/* ── Right Spline 3D scene ── */}
+        {/* ── Right visual: Robot with subtle radial glow + dark gradient edge overlay ── */}
         <div className="hero-visual" data-reveal style={{ transitionDelay: '.2s' }}>
-          <Card className="w-full h-[460px] sm:h-[480px] md:h-[500px] bg-black/[0.96] relative overflow-hidden border-white/10">
-            {/* Aura Glow */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full pointer-events-none opacity-60">
-              <div className="absolute top-1/4 left-1/4 w-64 h-64 bg-cyan-500/30 rounded-full blur-[90px]" />
-              <div className="absolute bottom-1/4 right-1/4 w-64 h-64 bg-purple-500/30 rounded-full blur-[90px]" />
+          {/* Frameless container without hard border - removed overflow-hidden so robot isn't in a rectangle */}
+          <div className="robot-container relative w-full h-[480px] sm:h-[500px] md:h-[540px]">
+            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" size={300} />
+            
+            {/* R2D2 text near legs (fades out) */}
+            <div style={{
+              position: 'absolute',
+              bottom: '10%',
+              left: '50%',
+              transform: 'translate(-50%, 0)',
+              zIndex: 15,
+              opacity: showR2D2 ? 0.25 : 0,
+              transition: 'opacity 1s ease-in-out',
+              fontFamily: '"Orbitron", sans-serif',
+              fontSize: 'clamp(3rem, 6vw, 5rem)',
+              fontWeight: 800,
+              color: '#ffffff',
+              letterSpacing: '0.1em',
+              pointerEvents: 'none',
+              textAlign: 'center'
+            }}>
+              R2D2
             </div>
-            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" fill="white" />
-            <div className="w-full h-full relative">
-              {/* Permanent text above the head */}
-              <div style={{
-                position: 'absolute',
-                top: '8%',
-                left: '50%',
-                transform: 'translate(-50%, 0)',
-                zIndex: 0,
-                opacity: 0.4,
-                fontFamily: '"Orbitron", sans-serif',
-                fontSize: 'clamp(1rem, 3.5vw, 2.2rem)',
-                fontWeight: 700,
-                color: '#ffffff',
-                letterSpacing: '0.12em',
-                pointerEvents: 'none',
-                textAlign: 'center',
-                width: '100%',
-                textTransform: 'uppercase',
-                padding: '0 12px'
-              }}>
-                MAKING MACHINES INTELLIGENT
-              </div>
-              
-              {/* R2D2 text near legs (fades out) */}
-              <div style={{
-                position: 'absolute',
-                bottom: '12%',
-                left: '50%',
-                transform: 'translate(-50%, 0)',
-                zIndex: 0,
-                opacity: showR2D2 ? 0.3 : 0,
-                transition: 'opacity 1s ease-in-out',
-                fontFamily: '"Orbitron", sans-serif',
-                fontSize: '5rem',
-                fontWeight: 800,
-                color: '#ffffff',
-                letterSpacing: '0.1em',
-                pointerEvents: 'none',
-                textAlign: 'center'
-              }}>
-                R2D2
-              </div>
-              <SplineScene
-                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
-                className="w-full h-full relative z-10"
-              />
-            </div>
-          </Card>
+
+            {/* 3D Spline Scene */}
+            <SplineScene
+              scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+              className="w-full h-full relative z-10"
+            />
+          </div>
         </div>
       </div>
 
-      {/* Scroll cue */}
-      <a href="#" className="scroll-cue" aria-label="Scroll down" onClick={handleScrollDown}>
-        <span />
+      {/* ── Scroll indicator at bottom ── */}
+      <a href="#about" className="scroll-indicator" aria-label="Scroll down" onClick={handleScrollDown}>
+        <div className="mouse-shell">
+          <div className="mouse-wheel" />
+        </div>
       </a>
     </section>
   )

@@ -8,30 +8,30 @@ export function Footer() {
             <span className="brand-name">
               <span className="ai">aI</span><span className="deas">DEAS</span>
             </span>
-            <p>The AI &amp; Data Science Association of Students at PVGCOET, Pune — built by students, for students.</p>
+            <p>The Council of AI &amp; Data Science Scholars at PVGCOET, Pune — forged by brethren, for the realm.</p>
           </div>
           <div className="footer-col">
-            <h5>Explore</h5>
-            <a href="/">Home</a>
-            <a href="/about">About</a>
-            <a href="/events">Events</a>
+            <h5>Explore the Lands</h5>
+            <a href="/">The Realm</a>
+            <a href="/about">Lore</a>
+            <a href="/events">Gatherings</a>
           </div>
           <div className="footer-col">
-            <h5>Community</h5>
-            <a href="/members">Members</a>
-            <a href="/achievements">Achievements</a>
-            <a href="/resources">Resources</a>
+            <h5>The Fellowship</h5>
+            <a href="/members">Brethren</a>
+            <a href="/achievements">Relics of Glory</a>
+            <a href="/resources">Ancient Tomes</a>
           </div>
           <div className="footer-col">
-            <h5>Connect</h5>
-            <a href="/contact">Contact Us</a>
-            <a href="mailto:aideas@pvgcoet.ac.in">Email</a>
+            <h5>Send Emissaries</h5>
+            <a href="/contact">Summon Us</a>
+            <a href="mailto:aideas@pvgcoet.ac.in">Raven Mail</a>
             <a href="https://www.instagram.com/aideas_pvg/" target="_blank" rel="noopener">Instagram</a>
             <a href="https://www.linkedin.com/company/aideas-pvg/" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="footer-copy">© 2026 aiDEAS — AI &amp; Data Science Association of Students</div>
+          <div className="footer-copy">© 2026 aiDEAS — The Sovereign Fellowship of AI &amp; Data Science</div>
           <div className="footer-social">
             <a href="https://www.linkedin.com/company/aideas-pvg/" target="_blank" rel="noopener" aria-label="aiDEAS on LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
