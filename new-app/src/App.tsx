@@ -1,4 +1,3 @@
-import './index.css'
 import { HomePage } from './pages/HomePage'
 import { NeuralBackground } from './components/ui/NeuralBackground'
 

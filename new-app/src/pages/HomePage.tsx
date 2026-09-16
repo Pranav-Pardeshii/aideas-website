@@ -8,9 +8,13 @@ function useReveal() {
   useEffect(() => {
     const container = ref.current
     if (!container) return
-    const targets = document.querySelectorAll<HTMLElement>('[data-reveal]')
+    const targets = container.querySelectorAll<HTMLElement>('[data-reveal]')
     const obs = new IntersectionObserver(
-      (entries) => entries.forEach((e) => { if (e.isIntersecting) e.target.classList.add('in') }),
+      (entries) => {
+        entries.forEach((e) => {
+          if (e.isIntersecting) e.target.classList.add('in')
+        })
+      },
       { threshold: 0.12 }
     )
     targets.forEach((t) => obs.observe(t))
@@ -19,8 +23,51 @@ function useReveal() {
   return ref
 }
 
+function useVideoAutoPause() {
+  const ref = useRef<HTMLDivElement>(null)
+  useEffect(() => {
+    const container = ref.current
+    if (!container) return
+    const videos = Array.from(container.querySelectorAll<HTMLVideoElement>('video'))
+    if (videos.length === 0) return
+
+    const obs = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          const video = entry.target as HTMLVideoElement
+          if (entry.isIntersecting) {
+            video.play().catch(() => {})
+          } else {
+            video.pause()
+          }
+        })
+      },
+      { rootMargin: '80px', threshold: 0.15 }
+    )
+
+    videos.forEach((v) => {
+      v.preload = 'metadata'
+      obs.observe(v)
+    })
+
+    const onVisibility = () => {
+      if (document.hidden) {
+        videos.forEach((v) => v.pause())
+      }
+    }
+    document.addEventListener('visibilitychange', onVisibility)
+
+    return () => {
+      obs.disconnect()
+      document.removeEventListener('visibilitychange', onVisibility)
+    }
+  }, [])
+  return ref
+}
+
 export function HomePage() {
   const pageRef = useReveal()
+  const videoHostRef = useVideoAutoPause()
 
   return (
     <div ref={pageRef}>
@@ -29,7 +76,7 @@ export function HomePage() {
       <Hero />
 
       {/* ── Feature zigzag ── */}
-      <section className="zigzag-section section-pad ambient-panel">
+      <section className="zigzag-section section-pad ambient-panel" ref={videoHostRef}>
         <div className="wrap">
           <div className="section-head" data-reveal>
             <div className="eyebrow">The Guild Foundation</div>
@@ -47,7 +94,7 @@ export function HomePage() {
               <div className="mockup-frame">
                 <div className="mockup-dots"><span /><span /><span /></div>
                 <div className="mockup-body mockup-video-single">
-                  <video className="mockup-video" autoPlay muted loop playsInline>
+                  <video className="mockup-video" muted loop playsInline preload="metadata">
                     <source src="/assets/video/Book_Loader.webm" type="video/webm" />
                   </video>
                 </div>
@@ -66,17 +113,17 @@ export function HomePage() {
                 <div className="mockup-dots"><span /><span /><span /></div>
                 <div className="mockup-body mockup-events">
                   <div className="mockup-event-card cyan">
-                    <video className="mockup-video" autoPlay muted loop playsInline>
+                    <video className="mockup-video" muted loop playsInline preload="metadata">
                       <source src="/assets/video/Successful_target.webm" type="video/webm" />
                     </video>
                   </div>
                   <div className="mockup-event-card purple">
-                    <video className="mockup-video" autoPlay muted loop playsInline>
+                    <video className="mockup-video" muted loop playsInline preload="metadata">
                       <source src="/assets/video/Employee_content.webm" type="video/webm" />
                     </video>
                   </div>
                   <div className="mockup-event-card cyan">
-                    <video className="mockup-video" autoPlay muted loop playsInline>
+                    <video className="mockup-video" muted loop playsInline preload="metadata">
                       <source src="/assets/video/Business_plan.webm" type="video/webm" />
                     </video>
                   </div>

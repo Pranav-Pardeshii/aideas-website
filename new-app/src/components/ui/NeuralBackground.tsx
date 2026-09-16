@@ -18,7 +18,7 @@ interface Node {
   baseVx: number
   baseVy: number
   radius: number
-  fire: number        // 0‑1 how "lit" the node is right now
+  fire: number
   fireCooldown: number
 }
 
@@ -27,7 +27,7 @@ interface FiringSignal {
   fromY: number
   toX: number
   toY: number
-  progress: number   // 0‑1
+  progress: number
   alpha: number
 }
 
@@ -39,7 +39,6 @@ export function NeuralBackground() {
   const rafRef = useRef<number>(0)
   const dprRef = useRef(1)
 
-  /* ── Spawn nodes ────────────────────────────────────────────────────────── */
   const initNodes = useCallback((w: number, h: number) => {
     const nodes: Node[] = []
     for (let i = 0; i < NODE_COUNT; i++) {
@@ -61,7 +60,6 @@ export function NeuralBackground() {
     signalsRef.current = []
   }, [])
 
-  /* ── Animation loop ─────────────────────────────────────────────────────── */
   const animate = useCallback(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -78,9 +76,7 @@ export function NeuralBackground() {
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     ctx.clearRect(0, 0, w, h)
 
-    /* ── Update nodes ──────────────────────────────────────────────────── */
     for (const node of nodes) {
-      // Mouse attraction
       const dx = mouse.x - node.x
       const dy = mouse.y - node.y
       const dist = Math.sqrt(dx * dx + dy * dy)
@@ -89,31 +85,26 @@ export function NeuralBackground() {
         node.vx += dx * force
         node.vy += dy * force
 
-        // Fire up nodes near cursor
         if (dist < MOUSE_RADIUS * 0.5 && node.fireCooldown <= 0) {
           node.fire = Math.min(1, node.fire + 0.08)
         }
       }
 
-      // Dampen back toward base velocity
       node.vx += (node.baseVx - node.vx) * 0.02
       node.vy += (node.baseVy - node.vy) * 0.02
 
       node.x += node.vx
       node.y += node.vy
 
-      // Wrap edges
       if (node.x < -20) node.x = w + 20
       if (node.x > w + 20) node.x = -20
       if (node.y < -20) node.y = h + 20
       if (node.y > h + 20) node.y = -20
 
-      // Decay fire
       node.fire = Math.max(0, node.fire - FIRE_DECAY)
       node.fireCooldown = Math.max(0, node.fireCooldown - 1)
     }
 
-    /* ── Draw connections + spawn signals ──────────────────────────────── */
     for (let i = 0; i < nodes.length; i++) {
       for (let j = i + 1; j < nodes.length; j++) {
         const a = nodes[i]
@@ -131,7 +122,6 @@ export function NeuralBackground() {
         ctx.lineWidth = 0.5
         ctx.stroke()
 
-        // If one node is firing, propagate to neighbor
         if (a.fire > 0.5 && b.fireCooldown <= 0 && Math.random() < 0.06) {
           b.fire = Math.min(1, b.fire + 0.4)
           b.fireCooldown = 30
@@ -152,7 +142,6 @@ export function NeuralBackground() {
       }
     }
 
-    /* ── Draw firing signals (travelling dots along connections) ────────── */
     for (let s = signals.length - 1; s >= 0; s--) {
       const sig = signals[s]
       sig.progress += FIRE_SPEED
@@ -171,7 +160,6 @@ export function NeuralBackground() {
       ctx.fillStyle = `rgba(255,255,255,${sig.alpha})`
       ctx.fill()
 
-      // Glow
       const grad = ctx.createRadialGradient(sx, sy, 0, sx, sy, 8)
       grad.addColorStop(0, `rgba(255,255,255,${sig.alpha * 0.5})`)
       grad.addColorStop(1, 'rgba(255,255,255,0)')
@@ -181,12 +169,10 @@ export function NeuralBackground() {
       ctx.fill()
     }
 
-    /* ── Draw nodes ────────────────────────────────────────────────────── */
     for (const node of nodes) {
       const r = node.radius + node.fire * (NODE_GLOW_RADIUS - node.radius)
       const a = 0.3 + node.fire * 0.7
 
-      // Glow
       if (node.fire > 0.1) {
         const grad = ctx.createRadialGradient(node.x, node.y, 0, node.x, node.y, r * 4)
         grad.addColorStop(0, `rgba(255,255,255,${node.fire * 0.35})`)
@@ -203,7 +189,6 @@ export function NeuralBackground() {
       ctx.fill()
     }
 
-    /* ── Spontaneous random firing (simulates neural activity) ──────────── */
     if (Math.random() < 0.02) {
       const rand = nodes[Math.floor(Math.random() * nodes.length)]
       if (rand.fireCooldown <= 0) {
@@ -215,7 +200,6 @@ export function NeuralBackground() {
     rafRef.current = requestAnimationFrame(animate)
   }, [])
 
-  /* ── Setup & resize ──────────────────────────────────────────────────── */
   useEffect(() => {
     const canvas = canvasRef.current
     if (!canvas) return
@@ -247,7 +231,6 @@ export function NeuralBackground() {
 
     resize()
 
-    // Also re-measure height after images/fonts load
     const resizeObs = new ResizeObserver(() => {
       const dpr = dprRef.current
       const newH = document.documentElement.scrollHeight

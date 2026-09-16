@@ -57,32 +57,33 @@ export function Navigation() {
     isMobileMenuOpenRef.current = isMobileMenuOpen
   }, [isMobileMenuOpen])
 
-  // Smooth, jitter-free scroll change handler
+  // Smooth, jitter-free scroll change handler — batch state updates
   const handleScrollChange = useCallback((latest: number) => {
     if (isMobileMenuOpenRef.current) {
       setIsVisible(true)
       return
     }
 
-    // 1. Scrolled pill threshold (hysteresis to prevent flipping right on 25px)
-    if (latest > 35) {
-      setIsScrolled((prev) => (!prev ? true : prev))
-    } else if (latest < 15) {
-      setIsScrolled((prev) => (prev ? false : prev))
-    }
+    let nextScrolled: boolean | null = null
+    let nextVisible: boolean | null = null
 
-    // 2. Always visible near top of page
+    if (latest > 35) nextScrolled = true
+    else if (latest < 15) nextScrolled = false
+
     if (latest <= 90) {
-      setIsVisible((prev) => (!prev ? true : prev))
+      nextVisible = true
       lastScrollY.current = latest
       lastDirectionChangeY.current = latest
+      if (nextScrolled !== null) {
+        setIsScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled))
+      }
+      setIsVisible((prev) => (prev ? prev : true))
       return
     }
 
     const prevY = lastScrollY.current
     const delta = latest - prevY
 
-    // 3. Direction change detection
     if (delta > 0 && !isScrollingDown.current) {
       isScrollingDown.current = true
       lastDirectionChangeY.current = latest
@@ -91,18 +92,21 @@ export function Navigation() {
       lastDirectionChangeY.current = latest
     }
 
-    // 4. Require a meaningful scroll distance (15px) before changing visibility
     const distanceSinceDirectionChange = Math.abs(latest - lastDirectionChangeY.current)
 
     if (distanceSinceDirectionChange > 15) {
-      if (isScrollingDown.current && latest > 150) {
-        setIsVisible((prev) => (prev ? false : prev))
-      } else if (!isScrollingDown.current) {
-        setIsVisible((prev) => (!prev ? true : prev))
-      }
+      if (isScrollingDown.current && latest > 150) nextVisible = false
+      else if (!isScrollingDown.current) nextVisible = true
     }
 
     lastScrollY.current = latest
+
+    if (nextScrolled !== null) {
+      setIsScrolled((prev) => (prev === nextScrolled ? prev : nextScrolled))
+    }
+    if (nextVisible !== null) {
+      setIsVisible((prev) => (prev === nextVisible ? prev : nextVisible))
+    }
   }, [])
 
   useMotionValueEvent(scrollY, "change", handleScrollChange)
