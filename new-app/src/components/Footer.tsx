@@ -8,30 +8,30 @@ export function Footer() {
             <span className="brand-name">
               <span className="ai">aI</span><span className="deas">DEAS</span>
             </span>
-            <p>The Council of AI &amp; Data Science Scholars at PVGCOET, Pune — forged by brethren, for the realm.</p>
+            <p>The Council of AI &amp; Data Science Architects at PVGCOET, Pune — forged by the guild, across the atlas.</p>
           </div>
           <div className="footer-col">
-            <h5>Explore the Lands</h5>
-            <a href="/">The Realm</a>
-            <a href="/about">Lore</a>
-            <a href="/events">Gatherings</a>
+            <h5>The Atlas</h5>
+            <a href="/">Overview</a>
+            <a href="/about">The Codex</a>
+            <a href="/events">Confluences</a>
           </div>
           <div className="footer-col">
-            <h5>The Fellowship</h5>
-            <a href="/members">Brethren</a>
-            <a href="/achievements">Relics of Glory</a>
-            <a href="/resources">Ancient Tomes</a>
+            <h5>The Guild</h5>
+            <a href="/members">Members</a>
+            <a href="/achievements">Hall of Triumphs</a>
+            <a href="/resources">Archives</a>
           </div>
           <div className="footer-col">
-            <h5>Send Emissaries</h5>
-            <a href="/contact">Summon Us</a>
-            <a href="mailto:aideas@pvgcoet.ac.in">Raven Mail</a>
+            <h5>Communications</h5>
+            <a href="/contact">Initiate Contact</a>
+            <a href="mailto:aideas@pvgcoet.ac.in">Direct Dispatch</a>
             <a href="https://www.instagram.com/aideas_pvg/" target="_blank" rel="noopener">Instagram</a>
             <a href="https://www.linkedin.com/company/aideas-pvg/" target="_blank" rel="noopener">LinkedIn</a>
           </div>
         </div>
         <div className="footer-bottom">
-          <div className="footer-copy">© 2026 aiDEAS — The Sovereign Fellowship of AI &amp; Data Science</div>
+          <div className="footer-copy">© 2026 aiDEAS — The Sovereign Guild of AI &amp; Data Science</div>
           <div className="footer-social">
             <a href="https://www.linkedin.com/company/aideas-pvg/" target="_blank" rel="noopener" aria-label="aiDEAS on LinkedIn">
               <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">

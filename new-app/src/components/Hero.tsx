@@ -2,36 +2,6 @@ import { useEffect, useRef, useState } from 'react'
 import { SplineScene } from '@/components/ui/splite'
 import { Spotlight } from '@/components/ui/spotlight'
 
-const WORDS = ['Future Leaders', 'Builders', 'Innovators', 'Researchers', 'Creators']
-
-function useTypewriter(words: string[]) {
-  const [displayed, setDisplayed] = useState('')
-  const [wordIdx, setWordIdx] = useState(0)
-  const [deleting, setDeleting] = useState(false)
-
-  useEffect(() => {
-    const word = words[wordIdx % words.length]
-    let timeout: ReturnType<typeof setTimeout>
-    if (!deleting) {
-      if (displayed.length < word.length) {
-        timeout = setTimeout(() => setDisplayed(word.slice(0, displayed.length + 1)), 55)
-      } else {
-        timeout = setTimeout(() => setDeleting(true), 1400)
-      }
-    } else {
-      if (displayed.length > 0) {
-        timeout = setTimeout(() => setDisplayed(displayed.slice(0, -1)), 30)
-      } else {
-        setDeleting(false)
-        setWordIdx((i) => i + 1)
-      }
-    }
-    return () => clearTimeout(timeout)
-  }, [displayed, deleting, wordIdx, words])
-
-  return displayed
-}
-
 function useReveal() {
   const ref = useRef<HTMLElement>(null)
   useEffect(() => {
@@ -49,7 +19,6 @@ function useReveal() {
 }
 
 export function Hero() {
-  const word = useTypewriter(WORDS)
   const sectionRef = useReveal() as React.RefObject<HTMLElement>
   const [showR2D2, setShowR2D2] = useState(true)
 
@@ -83,50 +52,33 @@ export function Hero() {
 
   return (
     <section id="home" ref={sectionRef as React.RefObject<HTMLElement>} onPointerDown={handlePointerDown}>
-      <div className="wrap hero-inner">
+      <div className="container hero-inner">
         {/* ── Left copy ── */}
         <div className="hero-copy">
           <h1 data-reveal="zoom" className="hero-title" style={{ transitionDelay: '.15s' }}>
-            <span className="hero-brand">
-              <span className="brand-ai">ai</span>
-              <span className="brand-deas">DEAS</span>
+            <span className="wordmark hero-brand">
+              aiDEAS
             </span>
           </h1>
 
-          <p className="empower-line" style={{ transitionDelay: '.25s', fontSize: '1.25rem', fontFamily: 'serif', fontStyle: 'italic', color: '#ccc' }}>
-            The Fellowship of Scholars, forging the intellect of machines.
+          <p className="empower-line" data-reveal style={{ transitionDelay: '.25s' }}>
+            The Guild of Architects, forging the intelligence of machines.
           </p>
 
           <div className="hero-actions" data-reveal style={{ transitionDelay: '.35s' }}>
-            <a href="#about" className="btn btn-primary btn-pulse" onClick={handleScrollDown}>
-              Embark on the Quest →
+            <a href="#about" className="btn btn-primary" onClick={handleScrollDown}>
+              Explore The Codex →
             </a>
             <a href="/events" className="btn btn-ghost">
-              View Gatherings
+              Explore Confluences
             </a>
-          </div>
-
-          {/* ── Stats badge row under CTAs ── */}
-          <div className="hero-stats-badge" data-reveal style={{ transitionDelay: '.45s' }}>
-            <span className="stats-indicator" aria-hidden="true" />
-            <span className="stats-segment">
-              <strong className="stats-highlight">500+</strong> Sworn Brethren
-            </span>
-            <span className="stats-sep" aria-hidden="true">·</span>
-            <span className="stats-segment">
-              <strong className="stats-highlight">20+</strong> Grand Councils
-            </span>
-            <span className="stats-sep" aria-hidden="true">·</span>
-            <span className="stats-segment">
-              <strong className="stats-highlight">Forged in 2023</strong>
-            </span>
           </div>
         </div>
 
         {/* ── Right visual: Robot with subtle radial glow + dark gradient edge overlay ── */}
         <div className="hero-visual" data-reveal style={{ transitionDelay: '.2s' }}>
-          {/* Frameless container without hard border - removed overflow-hidden so robot isn't in a rectangle */}
-          <div className="robot-container relative w-full h-[480px] sm:h-[500px] md:h-[540px]">
+          {/* Frameless container without hard border - flexible height on mobile to fit screen */}
+          <div className="robot-container relative w-full h-full min-h-[260px] md:h-[540px]">
             <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" size={300} />
             
             {/* R2D2 text near legs (fades out) */}
