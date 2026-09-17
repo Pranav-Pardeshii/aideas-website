@@ -1,6 +1,6 @@
 'use client'
 
-import { Suspense, lazy, useEffect, useRef, useState } from 'react'
+import { Suspense, lazy, useEffect, useRef } from 'react'
 import type { Application } from '@splinetool/runtime'
 
 const Spline = lazy(() => import('@splinetool/react-spline'))
@@ -23,7 +23,6 @@ function setSplineActive(app: Application | null, active: boolean) {
 export function SplineScene({ scene, className }: SplineSceneProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const appRef = useRef<Application | null>(null)
-  const [shouldLoad, setShouldLoad] = useState(true)
   useEffect(() => {
     const onVisibility = () => {
       setSplineActive(appRef.current, !document.hidden)
@@ -34,28 +33,22 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
 
   return (
     <div ref={wrapRef} className={className} style={{ width: '100%', height: '100%' }}>
-      {shouldLoad ? (
-        <Suspense
-          fallback={
-            <div className="w-full h-full flex items-center justify-center">
-              <span className="loader" />
-            </div>
-          }
-        >
-          <Spline
-            scene={scene}
-            className="w-full h-full"
-            onLoad={(app) => {
-              appRef.current = app
-              setSplineActive(app, !document.hidden)
-            }}
-          />
-        </Suspense>
-      ) : (
-        <div className="w-full h-full flex items-center justify-center">
-          <span className="loader" />
-        </div>
-      )}
+      <Suspense
+        fallback={
+          <div className="w-full h-full flex items-center justify-center">
+            <span className="loader" />
+          </div>
+        }
+      >
+        <Spline
+          scene={scene}
+          className="w-full h-full"
+          onLoad={(app) => {
+            appRef.current = app
+            setSplineActive(app, !document.hidden)
+          }}
+        />
+      </Suspense>
     </div>
   )
 }
