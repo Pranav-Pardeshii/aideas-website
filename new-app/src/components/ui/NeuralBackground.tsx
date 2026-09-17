@@ -201,6 +201,9 @@ export function NeuralBackground() {
   }, [])
 
   useEffect(() => {
+    // Disable completely on mobile devices to save battery and stop lag
+    if (typeof window !== 'undefined' && window.innerWidth < 768) return
+
     const canvas = canvasRef.current
     if (!canvas) return
 
@@ -208,10 +211,10 @@ export function NeuralBackground() {
       const dpr = Math.min(window.devicePixelRatio || 1, 2)
       dprRef.current = dpr
       canvas.width = window.innerWidth * dpr
-      canvas.height = document.documentElement.scrollHeight * dpr
+      canvas.height = window.innerHeight * dpr
       canvas.style.width = `${window.innerWidth}px`
-      canvas.style.height = `${document.documentElement.scrollHeight}px`
-      initNodes(window.innerWidth, document.documentElement.scrollHeight)
+      canvas.style.height = `${window.innerHeight}px`
+      initNodes(window.innerWidth, window.innerHeight)
     }
 
     const onMouseMove = (e: MouseEvent) => {
@@ -233,7 +236,7 @@ export function NeuralBackground() {
 
     const resizeObs = new ResizeObserver(() => {
       const dpr = dprRef.current
-      const newH = document.documentElement.scrollHeight
+      const newH = window.innerHeight
       canvas.height = newH * dpr
       canvas.style.height = `${newH}px`
     })
