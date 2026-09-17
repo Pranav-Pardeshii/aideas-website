@@ -55,14 +55,16 @@ img { max-width: 100%; display: block; }
 body h1, body h2, body h3, body h4 {
   background-image: linear-gradient(
     105deg,
-    var(--text) 0%, var(--text) 45%,
-    #ffffff 50%, var(--cyan-bright) 55%,
-    #ffffff 60%, var(--text) 70%, var(--text) 100%
+    var(--text) 0%, var(--text) 38%,
+    #ffffff 47%, var(--cyan-bright) 50%,
+    #ffffff 53%, var(--text) 62%, var(--text) 100%
   );
-  background-size: 100% 100%;
+  background-size: 220% 100%;
+  background-position: 180% 0;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent !important;
+  animation: heading-shine 4.8s ease-in-out infinite;
 }
 .grad-text {
   background-image: linear-gradient(
@@ -71,23 +73,27 @@ body h1, body h2, body h3, body h4 {
     #ffffff 47%, #d8c2ff 52%,
     var(--purple-bright) 60%, var(--purple-bright) 100%
   );
-  background-size: 100% 100%;
+  background-size: 220% 100%;
+  background-position: 180% 0;
   -webkit-background-clip: text;
   background-clip: text;
   color: transparent;
+  animation: heading-shine 4.8s ease-in-out infinite;
+}
+@keyframes heading-shine {
+  0%, 28% { background-position: 180% 0; }
+  68%, 100% { background-position: -30% 0; }
 }
 
 /* ─── Reveal animation ───────────────────────────────────────────────────── */
 [data-reveal] {
   opacity: 0; transform: translateY(26px);
   transition: opacity .8s cubic-bezier(.22,1,.36,1), transform .8s cubic-bezier(.22,1,.36,1);
-  will-change: opacity, transform;
 }
 [data-reveal].in { opacity: 1; transform: none; }
 [data-reveal="zoom"] {
   opacity: 0; transform: scale(2.2);
   transition: opacity .7s cubic-bezier(.22,1,.36,1), transform .7s cubic-bezier(.22,1,.36,1);
-  will-change: opacity, transform;
 }
 [data-reveal="zoom"].in { opacity: 1; transform: scale(1); }
 
@@ -96,13 +102,11 @@ body h1, body h2, body h3, body h4 {
   position: relative;
   background-color: transparent;
   background-image:
-    radial-gradient(640px 420px at 12% 15%, rgba(56,209,255,0.06), transparent 62%),
-    radial-gradient(640px 420px at 88% 85%, rgba(176,107,255,0.05), transparent 62%);
-  background-size: 160% 160%;
+    radial-gradient(640px 420px at 12% 15%, rgba(56,209,255,0.09), transparent 62%),
+    radial-gradient(640px 420px at 88% 85%, rgba(176,107,255,0.08), transparent 62%);
+  background-size: 180% 180%;
   background-position: 0% 0%;
-  animation: ambient-drift 120s ease-in-out infinite alternate;
-  will-change: background-position;
-  transform: translateZ(0);
+  animation: ambient-drift 70s ease-in-out infinite alternate;
 }
 .ambient-panel.soft { background-color: transparent; }
 @keyframes ambient-drift {
@@ -422,9 +426,7 @@ section { position: relative; }
 .zigzag-link:hover { opacity: 0.7; }
 .mockup-frame {
   background: var(--panel-grad), rgba(34,41,54,0.6); border: 1px solid var(--border); backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-radius: 16px; padding: 16px; box-shadow: 0 30px 70px -35px rgba(0,0,0,0.6);
-  transform: translateZ(0);
 }
 .mockup-dots { display: flex; gap: 6px; margin-bottom: 16px; }
 .mockup-dots span { width: 9px; height: 9px; border-radius: 50%; background: var(--border); }
@@ -460,9 +462,7 @@ section { position: relative; }
 .testimonial-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 24px; }
 .testimonial-card {
   background: rgba(34,41,54,0.6); border: 1px solid var(--border); border-radius: 16px; backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   padding: 28px 26px; display: flex; flex-direction: column; justify-content: space-between;
-  transform: translateZ(0);
 }
 .testimonial-card p { color: var(--text); font-size: 15px; line-height: 1.65; margin: 0 0 24px; }
 .testimonial-author { display: flex; align-items: center; gap: 12px; }
@@ -475,9 +475,7 @@ section { position: relative; }
 .about-cards { display: grid; grid-template-columns: repeat(2,1fr); gap: 26px; }
 .info-card {
   background: var(--panel-grad), rgba(34,41,54,0.55); border: 1px solid var(--border); backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
   border-radius: 18px; padding: 34px 32px;
-  transform: translateZ(0);
   transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s, border-color .35s;
 }
 .info-card:hover { transform: translateY(-6px); }
@@ -539,33 +537,3 @@ footer .wrap { position: relative; z-index: 1; }
 .footer-social a:hover { color: var(--cyan-bright); border-color: var(--cyan-bright); transform: translateY(-2px); }
 @media (max-width: 780px) { .footer-grid { grid-template-columns: 1fr 1fr; row-gap: 34px; } .footer-brand { grid-column: 1 / -1; } }
 @media (max-width: 480px) { .footer-grid { grid-template-columns: 1fr; } }
-
-/* ─── Mobile Performance Optimizations ─────────────────────────────────── */
-@media (max-width: 768px) {
-  /* Replace heavy GPU multi-pass backdrop blurs with sleek solid/translucent panels */
-  .mockup-frame,
-  .testimonial-card,
-  .info-card,
-  .btn-ghost {
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    background: rgba(20, 25, 36, 0.94) !important;
-  }
-
-  /* Disable continuous ambient drift on mobile */
-  .ambient-panel {
-    animation: none !important;
-    background-size: 100% 100% !important;
-  }
-
-  /* Native fluid momentum scroll on iOS/Android */
-  html, body {
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-  }
-
-  .robot-container {
-    touch-action: pan-y !important;
-  }
-}
-
