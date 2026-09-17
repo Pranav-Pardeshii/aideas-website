@@ -32,7 +32,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   }, [])
 
   useEffect(() => {
-    let scrollTimeout: NodeJS.Timeout
+    let scrollTimeout: ReturnType<typeof setTimeout>
     const onScroll = () => {
       if (wrapRef.current) {
         if (wrapRef.current.style.pointerEvents !== 'none') {
