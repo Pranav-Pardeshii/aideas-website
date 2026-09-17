@@ -24,35 +24,13 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
   const wrapRef = useRef<HTMLDivElement>(null)
   const appRef = useRef<Application | null>(null)
   const [shouldLoad, setShouldLoad] = useState(true)
-  const [inView, setInView] = useState(true)
-
-  useEffect(() => {
-    const el = wrapRef.current
-    if (!el) return
-
-    const obs = new IntersectionObserver(
-      ([entry]) => {
-        const visible = entry.isIntersecting
-        setInView(visible)
-        if (visible) setShouldLoad(true)
-      },
-      { rootMargin: '120px', threshold: 0.05 }
-    )
-    obs.observe(el)
-    return () => obs.disconnect()
-  }, [])
-
-  useEffect(() => {
-    setSplineActive(appRef.current, inView && !document.hidden)
-  }, [inView])
-
   useEffect(() => {
     const onVisibility = () => {
-      setSplineActive(appRef.current, inView && !document.hidden)
+      setSplineActive(appRef.current, !document.hidden)
     }
     document.addEventListener('visibilitychange', onVisibility)
     return () => document.removeEventListener('visibilitychange', onVisibility)
-  }, [inView])
+  }, [])
 
   return (
     <div ref={wrapRef} className={className} style={{ width: '100%', height: '100%' }}>
@@ -69,7 +47,7 @@ export function SplineScene({ scene, className }: SplineSceneProps) {
             className="w-full h-full"
             onLoad={(app) => {
               appRef.current = app
-              setSplineActive(app, inView && !document.hidden)
+              setSplineActive(app, !document.hidden)
             }}
           />
         </Suspense>

@@ -21,8 +21,8 @@ export function Spotlight({
   const mouseX = useSpring(0, springOptions)
   const mouseY = useSpring(0, springOptions)
 
-  const spotlightLeft = useTransform(mouseX, (x) => `${x - size / 2}px`)
-  const spotlightTop = useTransform(mouseY, (y) => `${y - size / 2}px`)
+  const spotlightX = useTransform(mouseX, (x) => x - size / 2)
+  const spotlightY = useTransform(mouseY, (y) => y - size / 2)
 
   useEffect(() => {
     if (containerRef.current) {
@@ -69,7 +69,7 @@ export function Spotlight({
         isHovered ? 'opacity-100' : 'opacity-0',
         className
       )}
-      style={{ width: size, height: size, left: spotlightLeft, top: spotlightTop }}
+      style={{ width: size, height: size, x: spotlightX, y: spotlightY }}
     />
   )
 }
