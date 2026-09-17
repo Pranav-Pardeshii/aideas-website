@@ -44,6 +44,7 @@ export function Navigation() {
   const [isVisible, setIsVisible] = useState(true)
   const [isScrolled, setIsScrolled] = useState(false)
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+  const [isMobile, setIsMobile] = useState(false)
   const isMobileMenuOpenRef = useRef(false)
   const pathname = usePathname()
   const { scrollY } = useScroll()
@@ -124,10 +125,12 @@ export function Navigation() {
 
   useEffect(() => {
     const handleResize = () => {
+      setIsMobile(window.innerWidth < 768)
       if (window.innerWidth >= 768) {
         setIsMobileMenuOpen(false)
       }
     }
+    handleResize()
     window.addEventListener("resize", handleResize, { passive: true })
     return () => window.removeEventListener("resize", handleResize)
   }, [])
@@ -136,7 +139,7 @@ export function Navigation() {
     <>
       <motion.nav
         initial={{ y: -100, opacity: 0 }}
-        animate={{ 
+        animate={isMobile ? { y: 0, opacity: 1 } : { 
           y: isVisible ? 0 : -120,
           opacity: isVisible ? 1 : 0,
         }}
@@ -146,9 +149,11 @@ export function Navigation() {
         }}
         style={{ willChange: "transform" }}
         className={`fixed z-50 inset-x-0 mx-auto transition-[top,width,max-width,border-radius,background-color,border-color,box-shadow] duration-300 ease-out transform-gpu block ${
-          isScrolled 
-            ? "top-3 w-[90%] max-w-[1100px] rounded-full bg-[#10131a]/85 dark:bg-[#10131a]/85 backdrop-blur-xl border border-[#38d1ff]/30 shadow-xl shadow-[#38d1ff]/10" 
-            : "top-4 sm:top-5 w-[95%] max-w-[1280px] rounded-[32px] bg-[#10131a]/60 dark:bg-[#10131a]/60 backdrop-blur-md border border-white/10 shadow-lg shadow-black/25"
+          isMobile
+            ? "top-0 w-full rounded-none bg-[#10131a] border-b border-white/10"
+            : isScrolled 
+              ? "top-3 w-[90%] max-w-[1100px] rounded-full bg-[#10131a]/85 dark:bg-[#10131a]/85 backdrop-blur-xl border border-[#38d1ff]/30 shadow-xl shadow-[#38d1ff]/10" 
+              : "top-4 sm:top-5 w-[95%] max-w-[1280px] rounded-[32px] bg-[#10131a]/60 dark:bg-[#10131a]/60 backdrop-blur-md border border-white/10 shadow-lg shadow-black/25"
         }`}
       >
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">

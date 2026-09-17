@@ -86,7 +86,9 @@ export function Hero() {
 
         <div className="hero-visual" data-reveal style={{ transitionDelay: '.2s' }}>
           <div className="robot-container relative w-full h-full min-h-[260px] md:h-[540px]">
-            <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" size={300} />
+            <div className="hidden md:block">
+              <Spotlight className="-top-40 left-0 md:left-60 md:-top-20" size={300} />
+            </div>
 
             <div style={{
               position: 'absolute',
